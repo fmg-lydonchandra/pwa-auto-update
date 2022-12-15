@@ -10,6 +10,7 @@
 
 ### Notes:
 1. For demo purpose, the update check is done every 10 seconds
+2. see [Video pwa-auto-update.mp4](./pwa-auto-update.mp4)
 2. Auto updater hinges on the addition of the following `console.log` statement in `service-worker.ts`
    1. ``` 
       // Any other custom service worker logic can go here.
