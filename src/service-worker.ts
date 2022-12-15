@@ -77,4 +77,17 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener("activate", (event) => {
+  // when this SW becomes activated, we claim all the opened clients
+  // they can be standalone PWA windows or browser tabs
+  event.waitUntil(self.clients.claim());
+});
+
+
 // Any other custom service worker logic can go here.
+const buildVersion = (): void => {
+  // eslint-disable-next-line no-console
+  console.log("Build version: ", process.env.REACT_APP_BUILD_VERSION);
+};
+
+buildVersion();

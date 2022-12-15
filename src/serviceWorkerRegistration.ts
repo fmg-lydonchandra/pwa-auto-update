@@ -58,6 +58,11 @@ export function register(config?: Config) {
 }
 
 function registerValidSW(swUrl: string, config?: Config) {
+  navigator.serviceWorker.addEventListener("controllerchange", (event) => {
+    console.log("controllerchange", event, " forcing reload");
+    window.location.reload();
+  });
+
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -95,6 +100,20 @@ function registerValidSW(swUrl: string, config?: Config) {
           }
         };
       };
+      const interval = 10_000;
+      window.setInterval(() => {
+        console.debug(`checking for app update every ${interval / 1000}s`);
+        registration.update().then((reg) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          if (reg.waiting != null) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            registration.waiting.postMessage({ type: "SKIP_WAITING" });
+          }
+        });
+        // todo: set interval to reasonable period
+      }, interval);
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);

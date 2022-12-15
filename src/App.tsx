@@ -8,6 +8,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
+          Version: v{process.env.REACT_APP_BUILD_VERSION}
+        </p>
+        <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
